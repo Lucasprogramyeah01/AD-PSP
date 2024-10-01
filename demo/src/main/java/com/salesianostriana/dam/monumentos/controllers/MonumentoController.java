@@ -26,8 +26,9 @@ public class MonumentoController {
 
     //EDITAR MONUMENTO
     @PostMapping
-    public void editarMonumento(int id){
+    public ResponseEntity<Void> editarMonumento(int id){
         monumentoService.editarMonumento(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //BORRAR MONUMENTO POR ID

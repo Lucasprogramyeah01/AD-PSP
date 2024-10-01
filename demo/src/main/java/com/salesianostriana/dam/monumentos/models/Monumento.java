@@ -22,9 +22,9 @@ public class Monumento {
 
     private String ciudad;
 
-    private String longitud;
+    private int longitud;
 
-    private String latitud;
+    private int latitud;
 
     private  String nombre;
 
