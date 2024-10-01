@@ -2,7 +2,6 @@ package com.salesianostriana.dam.monumentos.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +15,7 @@ public class Monumento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(nullable = false, length = 2)   //Esta columna no puede ser nula y su cadena de caracteres tiene una longitud de 2 caracteres.
     private String codPais;
 
     private String pais;

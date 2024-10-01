@@ -25,8 +25,12 @@ public class MonumentoService {
     }
 
     //Editar monumento.
-    public void editarMonumento(Monumento monumento){
-        monumentoRepository.save(monumento);
+    public void editarMonumento(int id){
+        Optional<Monumento> encontrado = buscarMonumentoPorID(id);
+
+        if(encontrado.isPresent()){
+            monumentoRepository.save(encontrado.get());
+        }
     }
 
     //Borrar monumento por ID.
@@ -35,3 +39,5 @@ public class MonumentoService {
     }
 
 }
+
+//EN LA CLASE InitData tienen las anotaciones en @Component y en su método @Post construct.
