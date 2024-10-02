@@ -32,6 +32,9 @@ public class Monumento {
     private String descripcion;
 
     @Lob
-    private String URLImagen;
+    private String imagen;
 
 }
+
+//En Categoría: @JSONIgnoreProperties("listadoCategorias")
+//En Libro: @JSONIgnoreProperties("listadoLibros")

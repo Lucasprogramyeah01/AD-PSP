@@ -24,9 +24,14 @@ public class MonumentoController {
         return new ResponseEntity<List<Monumento>>(monumentoService.obtenerListaMonumentos(), HttpStatus.OK);
     }
 
+    @PostMapping("/agregarMonumento")
+    public ResponseEntity<Monumento> agregarMonumento(Monumento monumento){
+        return new ResponseEntity<Monumento>(monumentoService.agregarMonumento(monumento), HttpStatus.CREATED);
+    }
+
     //EDITAR MONUMENTO
-    @PostMapping
-    public ResponseEntity<Void> editarMonumento(int id){
+    @PostMapping("/editarMonumento/{id}")
+    public ResponseEntity<Void> editarMonumento(@PathVariable("id")int id){
         monumentoService.editarMonumento(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -39,15 +44,9 @@ public class MonumentoController {
     }
 
     //BUSCAR MONUMENTO POR ID
-    @GetMapping("/{id}")
+    @GetMapping("/buscarMonumento/{id}")
     public ResponseEntity<Optional<Monumento>> buscarMonumentoPorID(@PathVariable("id") int id){
        return new ResponseEntity<Optional<Monumento>>(monumentoService.buscarMonumentoPorID(id), HttpStatus.OK);
     }
-
-
-
-
-
-
 
 }
