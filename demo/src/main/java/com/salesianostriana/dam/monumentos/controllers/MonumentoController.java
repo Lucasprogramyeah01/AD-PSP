@@ -24,13 +24,14 @@ public class MonumentoController {
         return new ResponseEntity<List<Monumento>>(monumentoService.obtenerListaMonumentos(), HttpStatus.OK);
     }
 
+    //AGREGAR MONUMENTO
     @PostMapping("/agregarMonumento")
-    public ResponseEntity<Monumento> agregarMonumento(Monumento monumento){
+    public ResponseEntity<Monumento> agregarMonumento(@RequestBody Monumento monumento){
         return new ResponseEntity<Monumento>(monumentoService.agregarMonumento(monumento), HttpStatus.CREATED);
     }
 
     //EDITAR MONUMENTO
-    @PostMapping("/editarMonumento/{id}")
+    @PutMapping("/editarMonumento/{id}")
     public ResponseEntity<Void> editarMonumento(@PathVariable("id")int id){
         monumentoService.editarMonumento(id);
         return new ResponseEntity<>(HttpStatus.OK);

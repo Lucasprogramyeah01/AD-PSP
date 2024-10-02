@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class Monumento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column(nullable = false, length = 2)   //Esta columna no puede ser nula y su cadena de caracteres tiene una longitud de 2 caracteres.
