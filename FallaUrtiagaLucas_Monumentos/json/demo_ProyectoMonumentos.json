@@ -1,0 +1,112 @@
+{
+	"info": {
+		"_postman_id": "1f6fbb91-9915-4af5-bc51-c35cb2f92ad7",
+		"name": "demo (Proyecto Monumentos)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38690233"
+	},
+	"item": [
+		{
+			"name": "Obtener lista de monumentos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/monumentos",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"monumentos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar monumento",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/monumentos/agregarMonumento",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"monumentos",
+						"agregarMonumento"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar monumento por ID",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/monumentos/editarMonumento/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"monumentos",
+						"editarMonumento",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar monumento por ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/monumentos/borrarMonumento/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"monumentos",
+						"borrarMonumento",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bucar monumento por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/monumentos/buscarMonumento/4",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"monumentos",
+						"buscarMonumento",
+						"4"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

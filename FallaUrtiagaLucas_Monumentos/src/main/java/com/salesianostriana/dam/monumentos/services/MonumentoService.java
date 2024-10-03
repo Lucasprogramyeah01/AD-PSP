@@ -30,11 +30,17 @@ public class MonumentoService {
     }
 
     //Editar monumento.
-    public void editarMonumento(int id){
+    public Monumento editarMonumento(Monumento monumento, int id){
+
+        Monumento mon = null;
         Optional<Monumento> encontrado = buscarMonumentoPorID(id);
 
         if(encontrado.isPresent()){
-            monumentoRepository.save(encontrado.get());
+            mon = encontrado.get();
+            mon = monumentoRepository.save(monumento);
+            return mon;
+        }else{
+            return null;
         }
     }
 

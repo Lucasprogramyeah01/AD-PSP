@@ -32,8 +32,8 @@ public class MonumentoController {
 
     //EDITAR MONUMENTO
     @PutMapping("/editarMonumento/{id}")
-    public ResponseEntity<Void> editarMonumento(@PathVariable("id")int id){
-        monumentoService.editarMonumento(id);
+    public ResponseEntity<Monumento> editarMonumento(@PathVariable("id")int id, @RequestBody Monumento monumento){
+        monumentoService.editarMonumento(monumento, id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
