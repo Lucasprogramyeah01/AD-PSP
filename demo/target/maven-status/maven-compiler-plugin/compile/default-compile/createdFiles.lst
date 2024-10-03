@@ -1,0 +1,5 @@
+com\salesianostriana\dam\monumentos\repositories\MonumentoRepository.class
+com\salesianostriana\dam\monumentos\DemoApplication.class
+com\salesianostriana\dam\monumentos\services\MonumentoService.class
+com\salesianostriana\dam\monumentos\controllers\MonumentoController.class
+com\salesianostriana\dam\monumentos\models\Monumento.class
