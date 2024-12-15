@@ -1,4 +1,4 @@
-package com.example.apartado2.models;
+package com.example.ejercicioSobreDTO.apartado1.models;
 
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -6,18 +6,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Categoria {
+public class Curso {
 
     @Id
     private Long id;
 
     private String nombre;
 
-    private List<Producto> listaProductos;
+    private String tipo;
+
+    private String tutor;
+
+    private int aula;
 }

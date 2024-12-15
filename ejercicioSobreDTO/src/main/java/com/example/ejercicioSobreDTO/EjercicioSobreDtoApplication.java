@@ -1,13 +1,13 @@
-package com.example.apartado2;
+package com.example.ejercicioSobreDTO;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Apartado2Application {
+public class EjercicioSobreDtoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Apartado2Application.class, args);
+		SpringApplication.run(EjercicioSobreDtoApplication.class, args);
 	}
 
 }

@@ -1,6 +1,5 @@
-package com.example.apartado2.models;
+package com.example.ejercicioSobreDTO.apartado2.models;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +9,8 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@AllArgsConstructor @NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Producto {
 
