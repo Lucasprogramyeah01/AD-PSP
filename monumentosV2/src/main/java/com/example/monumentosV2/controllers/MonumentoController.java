@@ -1,7 +1,6 @@
 package com.example.monumentosV2.controllers;
 
 import com.example.monumentosV2.models.Monumento;
-import com.example.monumentosV2.repositories.MonumentoRepository;
 import com.example.monumentosV2.services.MonumentoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -43,7 +42,7 @@ public class MonumentoController {
                                                     "longitud": -2.92528,
                                                     "latitud": 43.26271,
                                                     "nombreMonumento": "Puppy",
-                                                    "descripcion": "Es una icónica escultura floral moderna con 
+                                                    "descripcion": "Es una icónica escultura floral moderna con
                                                         forma de cachorro realizada por el artista estadounidense 
                                                         Jeff Koons en 1992 que está ubicada frente al Museo Guggenheim.",
                                                     "URLImagen": "https://cms.guggenheim-bilbao.eus/uploads/2021/03/Jeff-Koons-Puppy-1992.jpg"
@@ -78,7 +77,7 @@ public class MonumentoController {
         return monumentoService.getAllMonuments();
     }
 
-    @Operation(summary = "Obtiene un de todos los monumento buscado por ID.")
+    @Operation(summary = "Obtiene un monumento buscado por ID.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Se ha encontrado el monumento buscado.",
