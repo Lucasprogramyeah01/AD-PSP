@@ -1,0 +1,1 @@
+INSERT INTO (descripcion, nombre, precio, id) VALUES ('Lorem ipsum', 'Botellín fresquito', 1.0, nextval(productos_seq));
