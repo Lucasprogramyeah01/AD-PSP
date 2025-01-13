@@ -1,6 +1,7 @@
 package com.example.data.controller;
 
 import com.example.data.dto.EditProductoCmd;
+import com.example.data.dto.GetProductoDto;
 import com.example.data.service.ProductoService;
 import com.example.data.model.Producto;
 import lombok.Builder;
@@ -12,13 +13,14 @@ import java.util.List;
 
 @Builder
 @RestController
+@RequestMapping("/product/")
 public class ProductoController {
 
     private final ProductoService productoService;
 
-    @GetMapping //ACTUALIZAR MÉT0DO INCLUYENDO EL PRODUCTO DTO.
-    public List<Producto> getAll() {
-        return productoService.findAll();
+    @GetMapping
+    public List<GetProductoDto> getAll() {
+        return productoService.findAll().stream().map(GetProductoDto::of).toList();
     }
 
     @GetMapping("/{id}")
@@ -27,17 +29,17 @@ public class ProductoController {
     }
 
     @PostMapping
-    public ResponseEntity<Producto> create(@RequestBody EditProductoCmd editProductoCmd) {
-        return  ResponseEntity.status(HttpStatus.CREATED).body(productoService.save(editProductoCmd));
+    public ResponseEntity<Producto> create(@RequestBody EditProductoCmd nuevo) {
+        return  ResponseEntity.status(HttpStatus.CREATED).body(productoService.save(nuevo));
     }
 
     @PutMapping("/{id}")
-    public Producto updateMonument(@PathVariable("id") Long id, @RequestBody EditProductoCmd editProductoCmd) {
-        return productoService.edit(editProductoCmd, id);
+    public Producto update(@PathVariable("id") Long id, @RequestBody EditProductoCmd aEditar) {
+        return productoService.edit(aEditar, id);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Producto> deleteMonument(@PathVariable("id") Long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         productoService.delete(id);
         return ResponseEntity.noContent().build();
     }

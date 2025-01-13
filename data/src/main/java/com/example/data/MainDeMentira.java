@@ -16,13 +16,13 @@ public class MainDeMentira {
 
     @PostConstruct
     public void run() {
-        Producto p = Producto.builder()
+        /*Producto p = Producto.builder()
                 .nombre("Un producto")
                 .descripcion("Se trata de un producto de nuestro catálogo.")
                 .precio(123.45)
                 .build();
 
-        repo.save(p);
+        repo.save(p);*/
     }
 
 }
