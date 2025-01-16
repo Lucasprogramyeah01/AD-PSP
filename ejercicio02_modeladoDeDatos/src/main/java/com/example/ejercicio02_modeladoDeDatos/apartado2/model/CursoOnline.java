@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,11 +25,36 @@ public class CursoOnline {
 
     private double puntuacion;
 
+    //ASOCIACIÓN CON PROFESOR (MC - 1P)
+
     @ManyToOne
     @JoinColumn(name = "profesor_id",
         foreignKey = @ForeignKey(name = "fk_curso_profesor")
     )
     private Profesor profesor;
+
+    //ASOCIACIÓN CON VIDEO (1C - MV)
+
+    @OneToMany(mappedBy = "cursoOnline",
+        fetch = FetchType.EAGER,
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    @Builder.Default
+    @ToString.Exclude
+    private Set<Video> listaVideos = new HashSet<>();
+
+    //Métodos Helper (De Vídeo)
+
+        public void addVideo (Video v){
+            v.setCursoOnline(this);
+            this.listaVideos.add(v);
+        }
+
+        public void removeVideo (Video v){
+            this.listaVideos.remove(v);
+            v.setCursoOnline(null);
+        }
 
     //EQUALS Y HASHCODE
 

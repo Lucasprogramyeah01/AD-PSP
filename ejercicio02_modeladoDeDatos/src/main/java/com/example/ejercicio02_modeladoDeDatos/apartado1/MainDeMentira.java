@@ -16,17 +16,30 @@ public class MainDeMentira {
     private final CategoriaRepository categoriaRepository;
 
     @PostConstruct
-    public void run(){
+    public void init(){
 
-        Categoria c = categoriaRepository.getReferenceById(1L);
+        Categoria c = Categoria.builder()
+                .nombre("Alimentación")
+                .build();
+
+        Categoria c2 = Categoria.builder()
+                .nombre("Verde")
+                .categoria(c)
+                .build();
+
+        Categoria c3 = Categoria.builder()
+                .nombre("Líquido")
+                .build();
+
+        categoriaRepository.save(c);
+        categoriaRepository.save(c2);
+        categoriaRepository.save(c3);
 
         Producto p = Producto.builder()
                 .nombre("Lechuga")
                 .pvp(2.30)
                 .categoria(c)
                 .build();
-
-        c.addProducto(p);
 
         productoRepository.save(p);
 

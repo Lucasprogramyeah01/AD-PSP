@@ -36,7 +36,15 @@ public class Profesor {
 
     //Métodos Helper
 
+        public void addCursoOnline (CursoOnline c){
+            c.setProfesor(this);
+            this.listaCursosOnline.add(c);
+        }
 
+        public void removeCursoOnline (CursoOnline c){
+            this.listaCursosOnline.remove(c);
+            c.setProfesor(null);
+        }
 
     //EQUALS Y HASHCODE
 

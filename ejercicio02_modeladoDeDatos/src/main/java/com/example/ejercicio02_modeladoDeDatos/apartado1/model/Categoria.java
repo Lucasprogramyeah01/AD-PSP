@@ -33,7 +33,7 @@ public class Categoria {
     //ASOCIACIÓN CON CATEGORÍA (1C - MC)
 
     @ManyToOne
-    @JoinColumn(name = "categoria_id",
+    @JoinColumn(name = "categoria_relacion_id",
             foreignKey = @ForeignKey(name = "fk_categoria_categoria")
     )
     private Categoria categoria;
