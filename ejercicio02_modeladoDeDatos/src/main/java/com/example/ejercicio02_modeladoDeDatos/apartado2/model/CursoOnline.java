@@ -1,21 +1,19 @@
-package com.example.data.model;
+package com.example.ejercicio02_modeladoDeDatos.apartado2.model;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 @Entity
-public class Tag {
+public class CursoOnline {
 
     @Id
     @GeneratedValue
@@ -23,11 +21,13 @@ public class Tag {
 
     private String nombre;
 
-    @ManyToMany(mappedBy = "tags", fetch = FetchType.EAGER)
-    @Builder.Default
-    @Setter(AccessLevel.NONE)
-    @ToString.Exclude
-    private Set<Producto> productos = new HashSet<>();
+    private double puntuacion;
+
+    @ManyToOne
+    @JoinColumn(name = "profesor_id",
+        foreignKey = @ForeignKey(name = "fk_curso_profesor")
+    )
+    private Profesor profesor;
 
     //EQUALS Y HASHCODE
 
@@ -38,8 +38,8 @@ public class Tag {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Tag tag = (Tag) o;
-        return getId() != null && Objects.equals(getId(), tag.getId());
+        CursoOnline that = (CursoOnline) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
     }
 
     @Override

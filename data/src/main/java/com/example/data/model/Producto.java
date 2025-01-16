@@ -42,13 +42,25 @@ public class Producto {
 
         @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "producto_tag",
-            joinColumns = @JoinColumn(name = "producto_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id"),
-            foreignKey = @ForeignKey(name = "fk_producto_tag_producto"),
-            inverseForeignKey = @ForeignKey(name = "fk_producto_tag_tag")
+                joinColumns = @JoinColumn(name="producto_id"),
+                inverseJoinColumns = @JoinColumn(name="tag_id"),
+                foreignKey = @ForeignKey(name = "fk_producto_tag_producto"),
+                inverseForeignKey = @ForeignKey(name = "fk_producto_tag_tag")
         )
         @Builder.Default
         private Set<Tag> tags = new HashSet<>();
+
+    //MÉTODOS HELPER (Añadir y eliminat Tag).
+
+        public void addTag(Tag t) {
+            this.tags.add(t);
+            t.getProductos().add(this);
+        }
+
+        public void removeTag(Tag t) {
+            this.tags.remove(t);
+            t.getProductos().remove(this);
+        }
 
     //EQUALS Y HASHCODE
 
