@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -34,14 +32,14 @@ public class Categoria {
 
     @ManyToOne
     @JoinColumn(name = "categoria_relacion_id",
-            foreignKey = @ForeignKey(name = "fk_categoria_categoria")
+            foreignKey = @ForeignKey(name = "fk_categoria_padre_categoria")
     )
-    private Categoria categoria;
+    private Categoria categoriaPadre;
 
-    @OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "categoriaPadre", fetch = FetchType.EAGER)
     @Builder.Default
     @ToString.Exclude
-    private Set<Categoria> listaCategorias = new HashSet<>();
+    private List<Categoria> listaCategoriasHijas = new ArrayList<>();
 
     //Métodos helper (Con Producto)
 
@@ -58,13 +56,13 @@ public class Categoria {
     //Métodos helper (Con Categoria)
 
         public void addCategoria (Categoria c){
-            c.setCategoria(this);
-            this.listaCategorias.add(c);
+            c.setCategoriaPadre(this);
+            this.listaCategoriasHijas.add(c);
         }
 
         public void removeCategoria (Categoria c){
-            this.listaCategorias.remove(c);
-            c.setCategoria(null);
+            this.listaCategoriasHijas.remove(c);
+            c.setCategoriaPadre(null);
         }
 
     //EQUALS Y HASHCODE

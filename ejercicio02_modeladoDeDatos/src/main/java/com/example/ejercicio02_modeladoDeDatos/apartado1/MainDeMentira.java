@@ -24,7 +24,7 @@ public class MainDeMentira {
 
         Categoria c2 = Categoria.builder()
                 .nombre("Verde")
-                .categoria(c)
+                .categoriaPadre(c)
                 .build();
 
         Categoria c3 = Categoria.builder()
@@ -38,10 +38,16 @@ public class MainDeMentira {
         Producto p = Producto.builder()
                 .nombre("Lechuga")
                 .pvp(2.30)
-                .categoria(c)
+                .categoria(c2)
                 .build();
 
         productoRepository.save(p);
+
+        System.out.println(p);
+        System.out.println(c2);
+        System.out.println(c);
+
+        categoriaRepository.delete(c);
 
     }
 
