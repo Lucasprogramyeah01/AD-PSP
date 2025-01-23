@@ -1,5 +1,6 @@
-package com.example.ejercicioHerencia.mappedSuperClass.model;
+package com.example.ejercicioHerencia.singleTable.model;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -10,17 +11,11 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @SuperBuilder
 @ToString(callSuper = true)
 @Entity
-public class DetectorCalor extends Dispositivo{
-
-    private int minTemperatura;
-
-    private int maxTemperatura;
-
-    private int tension;
+@DiscriminatorValue("H")
+public class Hombre extends Persona {
 
     //EQUALS Y HASHCODE
 
@@ -31,8 +26,8 @@ public class DetectorCalor extends Dispositivo{
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        DetectorCalor that = (DetectorCalor) o;
-        return getId() != null && Objects.equals(getId(), that.getId());
+        Hombre hombre = (Hombre) o;
+        return getId() != null && Objects.equals(getId(), hombre.getId());
     }
 
     @Override
