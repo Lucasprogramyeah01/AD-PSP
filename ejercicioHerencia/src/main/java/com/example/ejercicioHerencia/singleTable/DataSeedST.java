@@ -2,8 +2,10 @@ package com.example.ejercicioHerencia.singleTable;
 
 import com.example.ejercicioHerencia.singleTable.model.Hombre;
 import com.example.ejercicioHerencia.singleTable.model.Mujer;
+import com.example.ejercicioHerencia.singleTable.model.Persona;
 import com.example.ejercicioHerencia.singleTable.repository.HombreRepository;
 import com.example.ejercicioHerencia.singleTable.repository.MujerRepository;
+import com.example.ejercicioHerencia.singleTable.repository.PersonaRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataSeedST {
 
+    private final PersonaRepository personaRepository;
     private final HombreRepository hombreRepository;
     private final MujerRepository mujerRepository;
 
@@ -26,7 +29,16 @@ public class DataSeedST {
                 .grupoSanguineo("AB")
                 .build();
 
-        hombreRepository.save(h1);
+        Persona h2 = Hombre.builder()
+                .nombre("Khindasvinto")
+                .apellidos("Khin Khin")
+                .altura(2.10)
+                .peso(80)
+                .grupoSanguineo("0")
+                .build();
+
+        personaRepository.save(h1);
+        personaRepository.save(h2);
 
         Mujer m1 = Mujer.builder()
                 .nombre("Paula")
