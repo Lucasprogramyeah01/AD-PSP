@@ -60,15 +60,15 @@ public class User implements UserDetails {
                 .collect(Collectors.toList());
     }
 
-    @CreatedDate
-    private LocalDateTime createdAt;
+    /*@CreatedDate
+    private LocalDateTime createdAt;*/
 
     /* @CreatedDate
     ----------------------------------------------------------------------------------------------------------------
     Se utiliza para marcar un campo en la clase de entidad que debe completarse automáticamente con
     la fecha y la hora en que se crea la entidad. */
 
-    @Builder.Default
-    private LocalDateTime lastPasswordChangeAt = LocalDateTime.now();
+    /*@Builder.Default
+    private LocalDateTime lastPasswordChangeAt = LocalDateTime.now();*/
 
 }

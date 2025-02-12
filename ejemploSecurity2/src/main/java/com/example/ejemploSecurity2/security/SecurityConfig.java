@@ -2,6 +2,7 @@ package com.example.ejemploSecurity2.security;
 
 import com.example.ejemploSecurity2.security.jwt.access.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,35 +26,42 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    AuthenticationManager authenticationManager(HttpSecurity http){
+    @Bean
+    AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
 
         AuthenticationManagerBuilder authenticationManagerBuilder =
                 http.getSharedObject(AuthenticationManagerBuilder.class);
 
-        AuthenticationManager
+        AuthenticationManager authenticationManager =
+                authenticationManagerBuilder.authenticationProvider(authenticationProvider())
+                    .build();
 
+        return authenticationManager;
     }
 
-    DaoAuthenticationProvider authenticationProvider(){
+    @Bean
+    DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider p = new DaoAuthenticationProvider();
 
-        p.setUserDetailsService(UserDetailsService);
+        p.setUserDetailsService(userDetailsService);
         p.setPasswordEncoder(passwordEncoder);
         return p;
     }
 
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf(csrf -> csrf.disable());
         http.cors(Customizer.withDefaults());
         http.sessionManagement((session) -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authorizeHttpRequests(authz -> authz
-                .requestMatchers(HttpMethod.POST, "/auth/register", "")
-                .anyRequest().au);
+                .requestMatchers(HttpMethod.POST, "/auth/register", "/auth/login").permitAll()
+                .anyRequest().authenticated());
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
+
 }

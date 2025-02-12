@@ -28,34 +28,34 @@ public class UserController {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
-    @GetMapping("/auth/register")
-    public ResponseEntity<?> register(@RequestBody CreateUserRequest createUserRequest){
+    @PostMapping("/auth/register")
+    public ResponseEntity<UserResponse> register(@RequestBody CreateUserRequest createUserRequest) {
         User user = userService.createUser(createUserRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.of(user));
     }
 
     @PostMapping("/auth/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.username();
-                        loginRequest.password();
-                );
+            new UsernamePasswordAuthenticationToken(
+                    loginRequest.username(),
+                    loginRequest.password()
+            )
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         User user = (User) authentication.getPrincipal();
 
-        String accessToken = jwtService.generateToken(user);
+        String accessToken = jwtService.generateAccessToken(user);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.of(user, accessToken));
     }
 
     @GetMapping("/me")
-    public UserResponse me(@AuthenticationPrincipal User user){
+    public UserResponse me(@AuthenticationPrincipal User user) {
         return UserResponse.of(user);
     }
 
