@@ -1,0 +1,59 @@
+package com.example.ejemploSecurity2.security;
+
+import com.example.ejemploSecurity2.security.jwt.access.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+@EnableWebSecurity
+@RequiredArgsConstructor
+@Configuration
+public class SecurityConfig {
+
+    private final PasswordEncoder passwordEncoder;
+    private final UserDetailsService userDetailsService;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    AuthenticationManager authenticationManager(HttpSecurity http){
+
+        AuthenticationManagerBuilder authenticationManagerBuilder =
+                http.getSharedObject(AuthenticationManagerBuilder.class);
+
+        AuthenticationManager
+
+    }
+
+    DaoAuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider p = new DaoAuthenticationProvider();
+
+        p.setUserDetailsService(UserDetailsService);
+        p.setPasswordEncoder(passwordEncoder);
+        return p;
+    }
+
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+
+        http.csrf(csrf -> csrf.disable());
+        http.cors(Customizer.withDefaults());
+        http.sessionManagement((session) -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.authorizeHttpRequests(authz -> authz
+                .requestMatchers(HttpMethod.POST, "/auth/register", "")
+                .anyRequest().au);
+
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }
+}
