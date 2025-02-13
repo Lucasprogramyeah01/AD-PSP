@@ -7,7 +7,6 @@ import com.example.ejemploSecurity2.user.dto.UserResponse;
 import com.example.ejemploSecurity2.user.model.User;
 import com.example.ejemploSecurity2.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -57,6 +56,11 @@ public class UserController {
     @GetMapping("/me")
     public UserResponse me(@AuthenticationPrincipal User user) {
         return UserResponse.of(user);
+    }
+
+    @GetMapping("/me/admin")
+    public User adminMe(@AuthenticationPrincipal User user){
+        return user;
     }
 
 }

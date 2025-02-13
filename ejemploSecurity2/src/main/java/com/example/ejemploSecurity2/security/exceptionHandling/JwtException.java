@@ -1,4 +1,4 @@
-package com.example.ejemploSecurity2.security.jwt.access;
+package com.example.ejemploSecurity2.security.exceptionHandling;
 
 public class JwtException extends RuntimeException {
     public JwtException(String message) {

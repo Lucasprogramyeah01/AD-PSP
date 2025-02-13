@@ -1,5 +1,6 @@
 package com.example.ejemploSecurity2.security.jwt.access;
 
+import com.example.ejemploSecurity2.security.exceptionHandling.JwtException;
 import com.example.ejemploSecurity2.user.model.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
