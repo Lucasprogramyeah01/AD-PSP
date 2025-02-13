@@ -1,6 +1,8 @@
 package com.example.ejemploSecurity2.user.controller;
 
 import com.example.ejemploSecurity2.security.jwt.access.JwtService;
+import com.example.ejemploSecurity2.security.jwt.refresh.RefreshToken;
+import com.example.ejemploSecurity2.security.jwt.refresh.RefreshTokenService;
 import com.example.ejemploSecurity2.user.dto.CreateUserRequest;
 import com.example.ejemploSecurity2.user.dto.LoginRequest;
 import com.example.ejemploSecurity2.user.dto.UserResponse;
@@ -26,6 +28,7 @@ public class UserController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final RefreshTokenService refreshTokenService;
 
     @PostMapping("/auth/register")
     public ResponseEntity<UserResponse> register(@RequestBody CreateUserRequest createUserRequest) {
@@ -37,12 +40,13 @@ public class UserController {
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
 
-        Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                    loginRequest.username(),
-                    loginRequest.password()
-            )
-        );
+        Authentication authentication =
+            authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.username(),
+                        loginRequest.password()
+                )
+            );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -50,7 +54,10 @@ public class UserController {
 
         String accessToken = jwtService.generateAccessToken(user);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.of(user, accessToken));
+        // Generar el token de refresco
+        RefreshToken refreshToken = refreshTokenService.create(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.of(user, accessToken, refreshToken.getToken()));
     }
 
     @GetMapping("/me")
@@ -59,7 +66,7 @@ public class UserController {
     }
 
     @GetMapping("/me/admin")
-    public User adminMe(@AuthenticationPrincipal User user){
+    public User adminMe(@AuthenticationPrincipal User user) {
         return user;
     }
 

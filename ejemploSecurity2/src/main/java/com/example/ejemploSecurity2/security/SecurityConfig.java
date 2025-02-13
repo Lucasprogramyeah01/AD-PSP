@@ -1,5 +1,6 @@
 package com.example.ejemploSecurity2.security;
 
+import com.example.ejemploSecurity2.security.exceptionHandling.JwtAccessDeniedHandler;
 import com.example.ejemploSecurity2.security.exceptionHandling.JwtAuthenticationEntryPoint;
 import com.example.ejemploSecurity2.security.jwt.access.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +27,8 @@ public class SecurityConfig {
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final
+    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
+    private final JwtAccessDeniedHandler accessDeniedHandler;
 
     @Bean
     AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
@@ -37,7 +38,7 @@ public class SecurityConfig {
 
         AuthenticationManager authenticationManager =
                 authenticationManagerBuilder.authenticationProvider(authenticationProvider())
-                    .build();
+                .build();
 
         return authenticationManager;
     }
@@ -58,11 +59,13 @@ public class SecurityConfig {
         http.cors(Customizer.withDefaults());
         http.sessionManagement((session) -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.exceptionHandling(excepz -> excepz.authenticationEntryPoint(jwtAuthenticationEntryPoint));
-
+        http.exceptionHandling(excepz -> excepz
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler)
+        );
         http.authorizeHttpRequests(authz -> authz
                 .requestMatchers(HttpMethod.POST, "/auth/register", "/auth/login").permitAll()
-                .requestMatchers()
+                .requestMatchers("/me/admin").hasRole("ADMIN")
                 .anyRequest().authenticated());
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

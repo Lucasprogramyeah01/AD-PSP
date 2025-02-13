@@ -17,11 +17,12 @@ import java.util.UUID;
 public class RefreshToken {
 
     @Id
+    @GeneratedValue
     private UUID id;
 
-    @MapsId
+    //@MapsId
     @OneToOne
-    @JoinColumn(name = "user_id", columnDefinition = "uuid")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @NaturalId
@@ -29,9 +30,9 @@ public class RefreshToken {
     private String token;
 
     @Column(nullable = false)
-    private Instant expiredAt;
+    private Instant expireAt;
 
     @Builder.Default
-    private Instant createdAt = Instant.now()
+    private Instant createdAt = Instant.now();
 
 }

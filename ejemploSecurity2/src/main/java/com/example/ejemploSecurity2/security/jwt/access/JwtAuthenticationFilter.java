@@ -3,7 +3,6 @@ package com.example.ejemploSecurity2.security.jwt.access;
 import com.example.ejemploSecurity2.security.exceptionHandling.JwtException;
 import com.example.ejemploSecurity2.user.model.User;
 import com.example.ejemploSecurity2.user.repository.UserRepository;
-import com.example.ejemploSecurity2.user.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,13 +35,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private HandlerExceptionResolver resolver;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+        FilterChain filterChain) throws ServletException, IOException {
 
         String token = getJwtAccessTokenFromRequest(request);
 
         // Validar el token
         // Si es válido, autenticar al usuario
-
         try {
             if (StringUtils.hasText(token) && jwtService.validateAccessToken(token)) {
 
@@ -56,28 +55,33 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 if (result.isPresent()) {
                     User user = result.get();
-                    UsernamePasswordAuthenticationToken authenticationToken =
-                            new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-
+                    UsernamePasswordAuthenticationToken
+                            authenticationToken = new UsernamePasswordAuthenticationToken(
+                            user,
+                            null,
+                            user.getAuthorities()
+                    );
                     authenticationToken.setDetails(new WebAuthenticationDetails(request));
 
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }
             }
-            filterChain.doFilter(request, response);
-        }catch (JwtException ex){
-            resolver.resolveException(ex);
+        } catch (JwtException ex) {
+            resolver.resolveException(request, response, null, ex);
         }
+
+        filterChain.doFilter(request, response);
     }
 
     private String getJwtAccessTokenFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader(JwtService.TOKEN_HEADER);
 
-        // Bearer uhefciusd.sudfhsuefbewuigfbwie.osaihfnce
+        // Bearer hhknefskdh.edsfvgsrgvergversdfr.segveggsry
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(JwtService.TOKEN_PREFIX)) {
             return bearerToken.substring(JwtService.TOKEN_PREFIX.length());
         }
         return null;
     }
+
 }

@@ -60,7 +60,6 @@ public class JwtService {
             .expiration(tokeExpirationDate)
             .signWith(secretKey)
             .compact();
-
     }
 
     public UUID getUserIdFromAccessToken(String token) {
