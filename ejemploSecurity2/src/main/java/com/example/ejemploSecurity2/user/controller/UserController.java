@@ -2,6 +2,7 @@ package com.example.ejemploSecurity2.user.controller;
 
 import com.example.ejemploSecurity2.security.jwt.access.JwtService;
 import com.example.ejemploSecurity2.security.jwt.refresh.RefreshToken;
+import com.example.ejemploSecurity2.security.jwt.refresh.RefreshTokenRequest;
 import com.example.ejemploSecurity2.security.jwt.refresh.RefreshTokenService;
 import com.example.ejemploSecurity2.user.dto.CreateUserRequest;
 import com.example.ejemploSecurity2.user.dto.LoginRequest;
@@ -40,13 +41,12 @@ public class UserController {
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
 
-        Authentication authentication =
-            authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.username(),
-                        loginRequest.password()
-                )
-            );
+        Authentication authentication = authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                    loginRequest.username(),
+                    loginRequest.password()
+            )
+        );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -58,6 +58,13 @@ public class UserController {
         RefreshToken refreshToken = refreshTokenService.create(user);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.of(user, accessToken, refreshToken.getToken()));
+    }
+
+    @PostMapping("/auth/refresh/token")
+    public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest req) {
+        String token = req.refreshToken();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(refreshTokenService.refreshToken(token));
     }
 
     @GetMapping("/me")
