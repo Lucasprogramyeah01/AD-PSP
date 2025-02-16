@@ -41,6 +41,26 @@ public class User implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<UserRole> roles;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.stream()
+                .map(role -> "ROLE_" + role)
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
+
+    //BAELDUNG 2.2
+    @Column(name = "enabled")
+    private boolean enabled;
+
+    private
+
+    /*@CreatedDate
+    private LocalDateTime createdAt;*/
+
+    /*@Builder.Default
+    private LocalDateTime lastPasswordChangeAt = LocalDateTime.now();*/
+
     /* @ElementCollection
     ----------------------------------------------------------------------------------------------------------------
     La anotación @ElementCollection es una característica útil en JPA para mapear estructuras de datos complejas.
@@ -52,23 +72,9 @@ public class User implements UserDetails {
     y definir sus relaciones. Podemos usarla para modelar estructuras de datos complejas de una manera simple
     y confiable. */
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream()
-                .map(role -> "ROLE_" + role)
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
-    }
-
-    /*@CreatedDate
-    private LocalDateTime createdAt;*/
-
     /* @CreatedDate
     ----------------------------------------------------------------------------------------------------------------
     Se utiliza para marcar un campo en la clase de entidad que debe completarse automáticamente con
     la fecha y la hora en que se crea la entidad. */
-
-    /*@Builder.Default
-    private LocalDateTime lastPasswordChangeAt = LocalDateTime.now();*/
 
 }
